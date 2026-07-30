@@ -6,6 +6,8 @@
 
 *بيانات المشروع مولّدة اصطناعيًا لأغراض العرض، والأرقام توضيحية.*
 
+![صفحة نظرة عامة](dashboard-overview.png)
+
 ## أبرز ما تكشفه اللوحة
 
 - الامتثال العام لا يتجاوز **19.9%**، ويبقى ثابتًا طوال الأشهر الستة دون تحسّن يُذكر.
@@ -34,6 +36,15 @@
 
 التصميم عربي (RTL) بثيم موحّد، مع عناوين بيانات على الرسوم وترتيب زمني للأشهر وأيام الأسبوع.
 
+**المخالفات والغرامات**
+![المخالفات والغرامات](dashboard-fines.png)
+
+**أداء المراقبين**
+![أداء المراقبين](dashboard-inspectors.png)
+
+**المنشآت والأنشطة**
+![المنشآت والأنشطة](dashboard-establishments.png)
+
 ## التشغيل
 
 افتح `visits_dashboard.pbip` في Power BI Desktop؛ ستُحمَّل البيانات من مجلد `data/`. اضغط Refresh عند أول فتح، وإن ظهر خيار ترقية صيغة التقرير فاختر **Don't upgrade**.
@@ -52,6 +63,8 @@ Power BI · DAX · Power Query · نمذجة نجمية (Star Schema) · Python
 An interactive Power BI dashboard analyzing regulatory inspection visits for the Madinah Region Municipality across the first half of 2023 — around 80,000 visits and 438,000 violations — turning them into a clear picture that supports enforcement and collection decisions.
 
 *The project data is synthetically generated for demonstration; the figures are illustrative.*
+
+![Overview page](dashboard-overview.png)
 
 ## Key findings
 
