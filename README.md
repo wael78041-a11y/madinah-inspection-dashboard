@@ -4,7 +4,7 @@
 
 لوحة Power BI تفاعلية تحلّل الزيارات الرقابية لأمانة منطقة المدينة المنورة في النصف الأول من 2023، نحو 80 ألف زيارة و438 ألف مخالفة، وتحوّلها إلى صورة واضحة تدعم قرارات الرقابة والتحصيل.
 
-*بيانات المشروع نموذجية لأغراض العرض، والأرقام توضيحية.*
+*بيانات المشروع محاكاة لأغراض العرض وليست بيانات حقيقية، والأرقام توضيحية.*
 
 ![صفحة نظرة عامة](dashboard-overview.png)
 
@@ -52,7 +52,7 @@ Power BI، وDAX، وPower Query، ونمذجة نجمية، وPython.
 
 An interactive Power BI dashboard that analyzes regulatory inspection visits for the Madinah Region Municipality across the first half of 2023, about 80,000 visits and 438,000 violations, turning them into a clear picture that supports enforcement and collection decisions.
 
-*The project uses a sample dataset for demonstration; the figures are illustrative.*
+*The project uses simulated, non-real data for demonstration; the figures are illustrative.*
 
 ![Overview page](dashboard-overview.png)
 
