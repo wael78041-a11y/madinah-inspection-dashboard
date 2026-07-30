@@ -1,0 +1,39 @@
+table dim_establishment
+	lineageTag: ed1f02f2-9a2b-4620-816f-e02361c86962
+
+	column 'رقم الرخصة'
+		dataType: string
+		lineageTag: c9ef4db4-02c1-4324-aafd-666160c1e001
+		summarizeBy: none
+		sourceColumn: رقم الرخصة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'اسم المنشأة'
+		dataType: string
+		lineageTag: 98bf0249-8ff3-4c5b-bd5f-48506c45463d
+		summarizeBy: none
+		sourceColumn: اسم المنشأة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم الجهة'
+		dataType: string
+		lineageTag: becd9798-c7e6-40ff-9829-1706f2a6f10b
+		summarizeBy: none
+		sourceColumn: رقم الجهة
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_establishment = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\dim_establishment.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"رقم الرخصة", type text}, {"اسم المنشأة", type text}, {"رقم الجهة", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

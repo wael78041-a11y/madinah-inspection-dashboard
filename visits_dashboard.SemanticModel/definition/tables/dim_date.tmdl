@@ -1,0 +1,99 @@
+table dim_date
+	lineageTag: 6109d726-119b-4258-b11d-82f820577b84
+
+	column التاريخ
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 03a3fe96-15a3-423d-8e6b-71246da01f6c
+		summarizeBy: none
+		sourceColumn: التاريخ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column السنة
+		dataType: int64
+		formatString: 0
+		lineageTag: 94c824d8-e581-408a-8d08-514904c673bb
+		summarizeBy: none
+		sourceColumn: السنة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم الشهر'
+		dataType: int64
+		formatString: 0
+		lineageTag: 98bb8d52-8dcf-4f5d-b5a0-b18015a022c9
+		summarizeBy: none
+		sourceColumn: رقم الشهر
+
+		annotation SummarizationSetBy = Automatic
+
+	column الشهر
+		dataType: string
+		lineageTag: 070e8214-9328-40e2-afaf-70f957ebf7ad
+		summarizeBy: none
+		sourceColumn: الشهر
+		sortByColumn: 'رقم الشهر'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column سنة-شهر
+		dataType: string
+		lineageTag: e374d19e-f010-4f8a-86ad-dbf40dae2dec
+		summarizeBy: none
+		sourceColumn: سنة-شهر
+
+		annotation SummarizationSetBy = Automatic
+
+	column الربع
+		dataType: string
+		lineageTag: 960ba439-c769-469a-9532-f4ca5d7b2ebb
+		summarizeBy: none
+		sourceColumn: الربع
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم اليوم'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e0c1912-7424-40c1-ad31-39ca9e62ee87
+		summarizeBy: none
+		sourceColumn: رقم اليوم
+
+		annotation SummarizationSetBy = Automatic
+
+	column اليوم
+		dataType: string
+		lineageTag: 5148c7b0-a03f-4096-8daf-0ca29344cb33
+		summarizeBy: none
+		sourceColumn: اليوم
+		sortByColumn: 'رقم اليوم'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'نهاية أسبوع'
+		dataType: string
+		lineageTag: b4365259-b4f5-4cc1-9719-3ed33ea517dc
+		summarizeBy: none
+		sourceColumn: نهاية أسبوع
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\dim_date.csv"), [Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"التاريخ", type date}, {"السنة", Int64.Type}, {"رقم الشهر", Int64.Type}, {"الشهر", type text}, {"سنة-شهر", type text}, {"الربع", type text}, {"رقم اليوم", Int64.Type}, {"اليوم", type text}, {"نهاية أسبوع", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

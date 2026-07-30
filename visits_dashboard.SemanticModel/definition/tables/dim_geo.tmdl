@@ -1,0 +1,39 @@
+table dim_geo
+	lineageTag: f5b01619-80d5-4653-8e0c-670996ccff32
+
+	column 'مفتاح الموقع'
+		dataType: string
+		lineageTag: 365c0284-72b7-4b48-befd-0c6a5c33ff8e
+		summarizeBy: none
+		sourceColumn: مفتاح الموقع
+
+		annotation SummarizationSetBy = Automatic
+
+	column البلدية
+		dataType: string
+		lineageTag: 91870d78-0700-4082-a076-a4b2dd81a0c0
+		summarizeBy: none
+		sourceColumn: البلدية
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'اسم الحي'
+		dataType: string
+		lineageTag: 1a43629e-02bf-4782-a2f7-594d2f82c715
+		summarizeBy: none
+		sourceColumn: اسم الحي
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_geo = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\dim_geo.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"مفتاح الموقع", type text}, {"البلدية", type text}, {"اسم الحي", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

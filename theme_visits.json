@@ -1,0 +1,274 @@
+{
+  "name": "الرقابة البلدية - المدينة المنورة",
+  "dataColors": [
+    "#5B3FBF",
+    "#8B6FE8",
+    "#B9A5F5",
+    "#3D2E7C",
+    "#A78BFA",
+    "#6C4FD8",
+    "#2D2159",
+    "#C9BCF7",
+    "#7A5FE0",
+    "#4B3B8F",
+    "#DCD4FB",
+    "#1F1640"
+  ],
+  "foreground": "#2D2A45",
+  "foregroundNeutralSecondary": "#6B6880",
+  "foregroundNeutralTertiary": "#9B98AD",
+  "background": "#FFFFFF",
+  "backgroundLight": "#F5F4F8",
+  "backgroundNeutral": "#EDEBF5",
+  "tableAccent": "#5B3FBF",
+  "good": "#16A34A",
+  "neutral": "#F59E0B",
+  "bad": "#DC2626",
+  "maximum": "#3D2E7C",
+  "center": "#8B6FE8",
+  "minimum": "#EDEBF5",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 16,
+      "color": "#2D2A45"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#2D2A45"
+    },
+    "label": { "fontFace": "Segoe UI", "fontSize": 10, "color": "#4A4763" },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 32,
+      "color": "#2D2A45"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#E8E5F2" } },
+            "radius": 10
+          }
+        ],
+        "visualHeader": [{ "show": false }],
+        "dropShadow": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#2D2A45" } },
+            "position": "Outer",
+            "preset": "BottomRight",
+            "shadowSpread": 3,
+            "shadowBlur": 8,
+            "transparency": 92
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#2D2A45" } },
+            "background": { "solid": { "color": "#FFFFFF" } },
+            "alignment": "right",
+            "fontSize": 13,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "labels": [
+          { "fontSize": 9, "color": { "solid": { "color": "#4A4763" } } }
+        ],
+        "categoryAxis": [
+          {
+            "show": true,
+            "showAxisTitle": false,
+            "labelColor": { "solid": { "color": "#6B6880" } },
+            "fontSize": 9,
+            "gridlineShow": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "show": true,
+            "showAxisTitle": false,
+            "labelColor": { "solid": { "color": "#6B6880" } },
+            "fontSize": 9,
+            "gridlineShow": true,
+            "gridlineColor": { "solid": { "color": "#EDEBF5" } },
+            "gridlineThickness": 1
+          }
+        ],
+        "legend": [
+          {
+            "show": true,
+            "position": "BottomCenter",
+            "showTitle": false,
+            "labelColor": { "solid": { "color": "#6B6880" } },
+            "fontSize": 9
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#F5F4F8" } }, "transparency": 0 }
+        ],
+        "outspace": [
+          { "color": { "solid": { "color": "#F5F4F8" } }, "transparency": 0 }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "color": { "solid": { "color": "#2D2A45" } },
+            "fontSize": 26,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "categoryLabels": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#6B6880" } },
+            "fontSize": 10
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "calloutValue": [
+          {
+            "fontSize": 26,
+            "fontFamily": "Segoe UI Semibold",
+            "color": { "solid": { "color": "#2D2A45" } }
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          { "color": { "solid": { "color": "#FFFFFF" } }, "transparency": 0 }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#E8E5F2" } },
+            "radius": 8
+          }
+        ],
+        "items": [
+          { "fontColor": { "solid": { "color": "#2D2A45" } }, "fontSize": 10 }
+        ],
+        "header": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#5B3FBF" } },
+            "fontSize": 10,
+            "background": { "solid": { "color": "#FFFFFF" } }
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          {
+            "gridVertical": false,
+            "gridHorizontal": true,
+            "gridHorizontalColor": { "solid": { "color": "#EDEBF5" } },
+            "rowPadding": 6
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontColor": { "solid": { "color": "#FFFFFF" } },
+            "backColor": { "solid": { "color": "#5B3FBF" } },
+            "fontSize": 10,
+            "alignment": "right",
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "values": [
+          {
+            "fontColor": { "solid": { "color": "#2D2A45" } },
+            "backColor": { "solid": { "color": "#FFFFFF" } },
+            "fontSize": 10,
+            "backColorSecondary": { "solid": { "color": "#FAF9FE" } }
+          }
+        ]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "columnHeaders": [
+          {
+            "fontColor": { "solid": { "color": "#FFFFFF" } },
+            "backColor": { "solid": { "color": "#5B3FBF" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "values": [
+          { "fontColor": { "solid": { "color": "#2D2A45" } }, "fontSize": 10 }
+        ]
+      }
+    },
+    "lineChart": {
+      "*": {
+        "lineStyles": [
+          {
+            "strokeWidth": 3,
+            "lineStyle": "solid",
+            "showMarker": true,
+            "markerSize": 4
+          }
+        ]
+      }
+    },
+    "donutChart": {
+      "*": {
+        "slices": [{ "innerRadiusRatio": 65 }],
+        "legend": [
+          {
+            "show": true,
+            "position": "RightCenter",
+            "showTitle": false,
+            "fontSize": 9
+          }
+        ]
+      }
+    },
+    "map": {
+      "*": {
+        "bubbles": [{ "bubbleSize": -20 }]
+      }
+    },
+    "shape": {
+      "*": {
+        "dropShadow": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }],
+        "dropShadow": [{ "show": false }]
+      }
+    },
+    "actionButton": {
+      "*": {
+        "dropShadow": [{ "show": false }]
+      }
+    }
+  }
+}

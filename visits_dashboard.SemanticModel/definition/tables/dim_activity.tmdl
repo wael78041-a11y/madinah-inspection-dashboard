@@ -1,0 +1,47 @@
+table dim_activity
+	lineageTag: c0e5a10e-35b0-41ec-93d5-53201e1d8768
+
+	column 'كود الايزيك'
+		dataType: string
+		lineageTag: 06aba23b-727e-4596-98e1-eae68b365f47
+		summarizeBy: none
+		sourceColumn: كود الايزيك
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'النشاط الاقتصادي'
+		dataType: string
+		lineageTag: ccdf2583-7a01-4865-b858-9617dddf656a
+		summarizeBy: none
+		sourceColumn: النشاط الاقتصادي
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم النشاط التفصيلي'
+		dataType: string
+		lineageTag: b88154a7-b5e3-4e87-8cee-379b9896ea10
+		summarizeBy: none
+		sourceColumn: رقم النشاط التفصيلي
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'اسم النشاط التفصيلي'
+		dataType: string
+		lineageTag: 782117d8-572d-4f8a-ab13-d9a2bc2f49fd
+		summarizeBy: none
+		sourceColumn: اسم النشاط التفصيلي
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_activity = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\dim_activity.csv"), [Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"كود الايزيك", type text}, {"النشاط الاقتصادي", type text}, {"رقم النشاط التفصيلي", type text}, {"اسم النشاط التفصيلي", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

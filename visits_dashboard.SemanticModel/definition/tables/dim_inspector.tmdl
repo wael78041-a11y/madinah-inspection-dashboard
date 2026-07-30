@@ -1,0 +1,39 @@
+table dim_inspector
+	lineageTag: 486541b1-f430-4706-8c5f-37fcd93e92f3
+
+	column 'هوية المراقب'
+		dataType: string
+		lineageTag: f78d16ae-7f17-4458-93d6-fa412bb7e269
+		summarizeBy: none
+		sourceColumn: هوية المراقب
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'اسم المراقب'
+		dataType: string
+		lineageTag: edd08d6b-860f-4b2c-b72d-45589773cc3e
+		summarizeBy: none
+		sourceColumn: اسم المراقب
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم هاتف المراقب'
+		dataType: string
+		lineageTag: fa32d4e2-f821-4190-8dc1-3b8ee082a77c
+		summarizeBy: none
+		sourceColumn: رقم هاتف المراقب
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_inspector = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\dim_inspector.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"هوية المراقب", type text}, {"اسم المراقب", type text}, {"رقم هاتف المراقب", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

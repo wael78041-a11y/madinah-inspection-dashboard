@@ -1,0 +1,292 @@
+table fact_visit
+	lineageTag: d418fcda-ebe6-48cb-a6b6-fa59c01fad30
+
+	/// إجمالي عدد الزيارات الرقابية
+	measure 'عدد الزيارات' = COUNTROWS('fact_visit')
+		formatString: #,0
+		lineageTag: fa642b14-ddf9-4b36-b20a-39247387e51d
+
+	/// الزيارات المنتهية فعليًا
+	measure 'عدد الزيارات المكتملة' = CALCULATE([عدد الزيارات], 'fact_visit'[حالة_مبسطة] = "مكتملة")
+		formatString: #,0
+		lineageTag: f6133670-42e1-4eb6-9ee4-603186961fcf
+
+	/// الزيارات المكتملة ÷ إجمالي الزيارات
+	measure 'نسبة الإنجاز' = DIVIDE([عدد الزيارات المكتملة], [عدد الزيارات])
+		formatString: 0.0%
+		lineageTag: 9c1f0cee-0c5c-4f90-b8d2-03d892c1e466
+
+	/// عدد المنشآت الفريدة المزارة (مفتاح الرخصة)
+	measure 'عدد المنشآت' = DISTINCTCOUNT('fact_visit'[رقم الرخصة])
+		formatString: #,0
+		lineageTag: 8b11dc95-e41d-4278-aefc-cc1c80791953
+
+	/// عدد المراقبين النشطين
+	measure 'عدد المراقبين' = DISTINCTCOUNT('fact_visit'[هوية المراقب])
+		formatString: #,0
+		lineageTag: 2eb71090-5706-4ba1-b987-10fbdbf478b9
+
+	/// متوسط درجة الامتثال (0-100)
+	measure 'متوسط درجة الامتثال' = AVERAGE('fact_visit'[درجة الامتثال])
+		formatString: #,0.0
+		lineageTag: f2da10cc-c1d9-4989-af4d-30718ead758e
+
+	/// يستبعد تلقائيًا المدد السالبة والأطول من 24 ساعة
+	measure 'متوسط مدة الزيارة (دقيقة)' = AVERAGE('fact_visit'[مدة الزيارة (دقيقة)])
+		formatString: #,0.0
+		lineageTag: b6cd6af4-79dc-497b-bd8e-5bf4289e1a3e
+
+	/// من الإسناد إلى بدء الزيارة
+	measure 'متوسط زمن الاستجابة (ساعة)' = AVERAGE('fact_visit'[زمن الاستجابة (ساعة)])
+		formatString: #,0.0
+		lineageTag: 5252418a-9f63-4a9b-be36-5f7f90e364f4
+
+	/// زيارات بلا أي مخالفة (إجمالي الزيارات ناقص الزيارات التي لها مخالفات)
+	measure 'عدد الزيارات الممتثلة' = [عدد الزيارات] - DISTINCTCOUNT('fact_violation'[رقم الزيارة])
+		formatString: #,0
+		lineageTag: 56b683e6-61af-4151-8631-82ac87f536b3
+
+	/// الزيارات بلا مخالفات ÷ إجمالي الزيارات
+	measure 'نسبة الامتثال' = DIVIDE([عدد الزيارات الممتثلة], [عدد الزيارات])
+		formatString: 0.0%
+		lineageTag: 2185b9da-a1c3-41d0-9921-bc50d9a302af
+
+	/// متوسط عبء العمل
+	measure 'زيارات لكل مراقب' = DIVIDE([عدد الزيارات], [عدد المراقبين])
+		formatString: #,0.0
+		lineageTag: 0349d956-63c5-44a3-8118-a8deb91aff7e
+
+	/// عدد الزيارات في الشهر السابق
+	measure 'عدد الزيارات ش.س' = CALCULATE([عدد الزيارات], DATEADD('dim_date'[التاريخ], -1, MONTH))
+		formatString: #,0
+		lineageTag: 5bbb83e7-8888-4b06-9af1-0b16db4d53b3
+
+	/// نسبة التغير عن الشهر السابق
+	measure 'تغير الزيارات %' =
+			VAR p = [عدد الزيارات ش.س]
+			RETURN DIVIDE([عدد الزيارات] - p, p)
+		formatString: 0.0%
+		lineageTag: a96586ff-b505-4839-b842-ad3f746d4d3b
+
+	column 'رقم الزيارة'
+		dataType: string
+		lineageTag: 64b4f59c-908d-4ed4-8626-ce9665b5f7a5
+		summarizeBy: none
+		sourceColumn: رقم الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'تاريخ ووقت الاسناد'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c9ff60f2-c85f-4b12-a7d7-4d26f88583f6
+		summarizeBy: none
+		sourceColumn: تاريخ ووقت الاسناد
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'تاريخ بدء الزيارة'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8cc6ce93-cb48-4fbe-86af-6a2829821d5d
+		summarizeBy: none
+		sourceColumn: تاريخ بدء الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'تاريخ انهاء الزيارة'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4285b0d4-6775-4811-a906-575d2190efe1
+		summarizeBy: none
+		sourceColumn: تاريخ انهاء الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'هوية المراقب'
+		dataType: string
+		lineageTag: d886e0b3-4ac6-4473-8f82-b1d393a39b1e
+		summarizeBy: none
+		sourceColumn: هوية المراقب
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم الرخصة'
+		dataType: string
+		lineageTag: fce8b96a-2ec9-495b-9d23-5c4a5c9d05e9
+		summarizeBy: none
+		sourceColumn: رقم الرخصة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'كود الايزيك'
+		dataType: string
+		lineageTag: 52f64290-23e6-42c2-bf6b-f62464affdcb
+		summarizeBy: none
+		sourceColumn: كود الايزيك
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'نوع الرقابة'
+		dataType: string
+		lineageTag: a0eb4276-5c6e-4bb4-a6a9-74fae50ca695
+		summarizeBy: none
+		sourceColumn: نوع الرقابة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'نوع الزيارة'
+		dataType: string
+		lineageTag: 06358c19-c283-41b6-a237-02153cb090b9
+		summarizeBy: none
+		sourceColumn: نوع الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'حالة الزيارة'
+		dataType: string
+		lineageTag: b87448f2-b084-4186-b1f7-1a04d9f2d88a
+		summarizeBy: none
+		sourceColumn: حالة الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column حالة_مبسطة
+		dataType: string
+		lineageTag: 8684d70b-9b76-42cf-88a0-fee125c3ef27
+		summarizeBy: none
+		sourceColumn: حالة_مبسطة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'درجة خطورة النشاط'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e6fdc8e-dad7-4afa-a27a-5c9328361e01
+		summarizeBy: sum
+		sourceColumn: درجة خطورة النشاط
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'درجة الامتثال'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2638638c-19f0-4821-925c-4ab43cf36d3d
+		summarizeBy: sum
+		sourceColumn: درجة الامتثال
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'عدد البنود الغير ممتثلة'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b722157-2e62-4866-9335-d9287c381420
+		summarizeBy: sum
+		sourceColumn: عدد البنود الغير ممتثلة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'مدة الزيارة (دقيقة)'
+		dataType: double
+		lineageTag: 30098b66-1825-4cf9-9603-203fc41b3a11
+		summarizeBy: sum
+		sourceColumn: مدة الزيارة (دقيقة)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'مدة صالحة'
+		dataType: string
+		lineageTag: 53f8e51b-415a-4e00-a35f-c6912b0af151
+		summarizeBy: none
+		sourceColumn: مدة صالحة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'خط العرض'
+		dataType: double
+		lineageTag: d31ad26a-3139-4b26-84bb-1b729f194489
+		summarizeBy: sum
+		sourceColumn: خط العرض
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'خط الطول'
+		dataType: double
+		lineageTag: 94a987e0-3853-4add-b391-f3cce946f03b
+		summarizeBy: sum
+		sourceColumn: خط الطول
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'احداثي صالح'
+		dataType: string
+		lineageTag: 5251bcd9-d7b8-4b7b-ac6c-17fe2d847a03
+		summarizeBy: none
+		sourceColumn: احداثي صالح
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'تاريخ الزيارة'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 418a868f-1ff2-40a9-818a-d8c30da7e9c0
+		summarizeBy: none
+		sourceColumn: تاريخ الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ساعة_الزيارة
+		dataType: int64
+		formatString: 0
+		lineageTag: cc709666-b3dc-4d32-b558-4fcf06265924
+		summarizeBy: sum
+		sourceColumn: ساعة_الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column يوم_الاسبوع
+		dataType: string
+		lineageTag: eab69352-6390-427b-8389-2273d348351d
+		summarizeBy: none
+		sourceColumn: يوم_الاسبوع
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'زمن الاستجابة (ساعة)'
+		dataType: double
+		lineageTag: 4f4523f0-d8d9-4c9c-931b-3814d19da374
+		summarizeBy: sum
+		sourceColumn: زمن الاستجابة (ساعة)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'مفتاح الموقع'
+		dataType: string
+		lineageTag: 6c4487ef-b658-4a19-9069-89b367df4a38
+		summarizeBy: none
+		sourceColumn: مفتاح الموقع
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_visit = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\fact_visit.csv"), [Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"رقم الزيارة", type text}, {"تاريخ ووقت الاسناد", type datetime}, {"تاريخ بدء الزيارة", type datetime}, {"تاريخ انهاء الزيارة", type datetime}, {"هوية المراقب", type text}, {"رقم الرخصة", type text}, {"كود الايزيك", type text}, {"نوع الرقابة", type text}, {"نوع الزيارة", type text}, {"حالة الزيارة", type text}, {"حالة_مبسطة", type text}, {"درجة خطورة النشاط", Int64.Type}, {"درجة الامتثال", Int64.Type}, {"عدد البنود الغير ممتثلة", Int64.Type}, {"مدة الزيارة (دقيقة)", type number}, {"مدة صالحة", type text}, {"خط العرض", type number}, {"خط الطول", type number}, {"احداثي صالح", type text}, {"تاريخ الزيارة", type date}, {"ساعة_الزيارة", Int64.Type}, {"يوم_الاسبوع", type text}, {"زمن الاستجابة (ساعة)", type number}, {"مفتاح الموقع", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

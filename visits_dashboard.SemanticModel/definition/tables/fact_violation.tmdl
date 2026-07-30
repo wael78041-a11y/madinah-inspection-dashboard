@@ -1,0 +1,145 @@
+table fact_violation
+	lineageTag: 4374b295-73af-4a85-b188-e329c1678d90
+
+	/// عدد صفوف المخالفات (يرجع 0 بدل فراغ للزيارات الممتثلة) — لا تستخدم DISTINCTCOUNT على معرف المخالفة لأنه يتصادم
+	measure 'عدد المخالفات' = COUNTROWS('fact_violation') + 0
+		formatString: #,0
+		lineageTag: 70b5dfc2-ce9c-42fe-8767-57cced9bbe63
+
+	/// إجمالي قيم المخالفات (يرجع 0 بدل فراغ) — يُحسب على حبيبة المخالفة
+	measure 'إجمالي الغرامات' = SUM('fact_violation'[قيمة المخالفة]) + 0
+		formatString: #,0
+		lineageTag: 5e392831-ded6-4532-9352-37199ec5c452
+
+	/// متوسط قيمة المخالفة الواحدة
+	measure 'متوسط الغرامة' = AVERAGE('fact_violation'[قيمة المخالفة])
+		formatString: #,0
+		lineageTag: 0184206e-cb6a-4fcd-9027-5b9844f77582
+
+	/// قيمة الغرامات المسددة فعليًا
+	measure 'الغرامات المسددة' = CALCULATE([إجمالي الغرامات], 'fact_violation'[حالة السداد] = "مسددة")
+		formatString: #,0
+		lineageTag: 79fd5abb-7268-4022-ab51-9a467f288ba8
+
+	/// قيمة الغرامات المستحقة
+	measure 'الغرامات غير المسددة' = CALCULATE([إجمالي الغرامات], 'fact_violation'[حالة السداد] = "لم تُسدد")
+		formatString: #,0
+		lineageTag: 645619da-2c59-400e-84d5-34bfc8914b2b
+
+	/// المسددة ÷ (المسددة + غير المسددة) — تستبعد الملغاة وغير المفوترة
+	measure 'نسبة التحصيل' = DIVIDE([الغرامات المسددة], [الغرامات المسددة] + [الغرامات غير المسددة])
+		formatString: 0.0%
+		lineageTag: 5f76030f-9608-43f7-9d7b-4cc7b61752db
+
+	/// المخالفات المصنفة كإنذار
+	measure 'عدد الإنذارات' = CALCULATE([عدد المخالفات], 'fact_violation'[هل المخالفة انذار] = "نعم")
+		formatString: #,0
+		lineageTag: b5bc43af-38fd-4e60-bae2-6cf6d64bcc25
+
+	/// متوسط عدد المخالفات في الزيارة
+	measure 'مخالفات لكل زيارة' = DIVIDE([عدد المخالفات], [عدد الزيارات])
+		formatString: #,0.00
+		lineageTag: 0f0bcbef-0700-4e2d-a80b-48012be10aeb
+
+	/// إجمالي الغرامات في الشهر السابق
+	measure 'إجمالي الغرامات ش.س' = CALCULATE([إجمالي الغرامات], DATEADD('dim_date'[التاريخ], -1, MONTH))
+		formatString: #,0
+		lineageTag: d1a7c671-1a18-4186-be3a-29fd8313257c
+
+	/// نسبة التغير عن الشهر السابق
+	measure 'تغير الغرامات %' =
+			VAR p = [إجمالي الغرامات ش.س]
+			RETURN DIVIDE([إجمالي الغرامات] - p, p)
+		formatString: 0.0%
+		lineageTag: bc0247d7-e886-43d5-b594-deb86b98fe07
+
+	column 'مفتاح المخالفة'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ac2c259-84ec-4458-ba26-b5e4d15f9669
+		summarizeBy: sum
+		sourceColumn: مفتاح المخالفة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم الزيارة'
+		dataType: string
+		lineageTag: 9245f796-0489-48c8-b344-9b22dfb95460
+		summarizeBy: none
+		sourceColumn: رقم الزيارة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'معرف المخالفة'
+		dataType: string
+		lineageTag: d0a20e0b-9061-49aa-bdaa-057399bcab96
+		summarizeBy: none
+		sourceColumn: معرف المخالفة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'قيمة المخالفة'
+		dataType: double
+		lineageTag: 0d49df4f-a8bc-461c-b067-68bf0a75e179
+		summarizeBy: sum
+		sourceColumn: قيمة المخالفة
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'رقم بند اللائحة'
+		dataType: string
+		lineageTag: d0cad15f-770e-4bf4-a507-42c49bb9ad96
+		summarizeBy: none
+		sourceColumn: رقم بند اللائحة
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'هل المخالفة انذار'
+		dataType: string
+		lineageTag: a0d39ea4-cf54-4619-be39-f5196ec1417e
+		summarizeBy: none
+		sourceColumn: هل المخالفة انذار
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'حالة السداد'
+		dataType: string
+		lineageTag: 5a0c6e95-5ea4-4e41-bd0c-eecad51fd592
+		summarizeBy: none
+		sourceColumn: حالة السداد
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'رقم السداد'
+		dataType: string
+		lineageTag: 38b69df0-6733-4e3e-a8d5-dcd91d6d4884
+		summarizeBy: none
+		sourceColumn: رقم السداد
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'تاريخ السداد'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d5d35cba-c482-4909-89fc-43af9a43f70f
+		summarizeBy: none
+		sourceColumn: تاريخ السداد
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition fact_violation = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\\Users\\risk_\\Downloads\\visits_dashboard_pbip\\data\\fact_violation.csv"), [Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"مفتاح المخالفة", Int64.Type}, {"رقم الزيارة", type text}, {"معرف المخالفة", type text}, {"قيمة المخالفة", type number}, {"رقم بند اللائحة", type text}, {"هل المخالفة انذار", type text}, {"حالة السداد", type text}, {"رقم السداد", type text}, {"تاريخ السداد", type date}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

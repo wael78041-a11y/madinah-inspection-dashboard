@@ -1,0 +1,24 @@
+relationship AutoDetected_7f6410b6-9eae-4796-82cf-01f392b75bfb
+	fromColumn: fact_visit.'مفتاح الموقع'
+	toColumn: dim_geo.'مفتاح الموقع'
+
+relationship AutoDetected_e506eadc-5180-411a-8bfb-7ba22afa4d50
+	fromColumn: fact_visit.'هوية المراقب'
+	toColumn: dim_inspector.'هوية المراقب'
+
+relationship AutoDetected_4bb56da8-06f0-4265-9214-fc1d233d2979
+	fromColumn: fact_violation.'رقم الزيارة'
+	toColumn: fact_visit.'رقم الزيارة'
+
+relationship 2cda50d1-dbe4-5d37-3a66-16304eac0e09
+	fromColumn: fact_visit.'رقم الرخصة'
+	toColumn: dim_establishment.'رقم الرخصة'
+
+relationship dd304974-a071-834a-c5e9-7f6220334bd6
+	fromColumn: fact_visit.'كود الايزيك'
+	toColumn: dim_activity.'كود الايزيك'
+
+relationship 967124cb-047e-e225-d78b-5471e145f9de
+	fromColumn: fact_visit.'تاريخ الزيارة'
+	toColumn: dim_date.التاريخ
+

@@ -1,0 +1,22 @@
+model Model
+	culture: ar-SA
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: ar-SA
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_date", "dim_geo", "dim_inspector", "dim_establishment", "dim_activity", "fact_visit", "fact_violation"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_date
+ref table dim_geo
+ref table dim_inspector
+ref table dim_establishment
+ref table dim_activity
+ref table fact_visit
+ref table fact_violation
+
