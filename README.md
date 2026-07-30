@@ -4,7 +4,7 @@
 
 لوحة Power BI تفاعلية تحلّل الزيارات الرقابية لأمانة منطقة المدينة المنورة في النصف الأول من 2023، نحو 80 ألف زيارة و438 ألف مخالفة، وتحوّلها إلى صورة واضحة تدعم قرارات الرقابة والتحصيل.
 
-*بيانات المشروع مولّدة اصطناعيًا لأغراض العرض، والأرقام توضيحية.*
+*بيانات المشروع نموذجية لأغراض العرض، والأرقام توضيحية.*
 
 ![صفحة نظرة عامة](dashboard-overview.png)
 
@@ -18,7 +18,7 @@
 
 ## كيف بُنيت
 
-جاء المصدر ملف إكسل بورقتين على مستويين مختلفين (الزيارة والمخالفة)، فأُعيدت هيكلته في نموذج نجمي يفصل الحقائق عن الأبعاد: جدولا حقائق (الزيارات والمخالفات) وستة أبعاد هي التاريخ والمنشأة والنشاط والموقع والمراقب، مع 23 مقياس DAX وست علاقات نشطة.
+جاء المصدر ملف إكسل بورقتين على مستويين مختلفين (الزيارة والمخالفة)، فأعدت هيكلته في نموذج نجمي يفصل الحقائق عن الأبعاد: جدولا حقائق (الزيارات والمخالفات) وستة أبعاد هي التاريخ والمنشأة والنشاط والموقع والمراقب، مع 23 مقياس DAX وست علاقات نشطة.
 
 أهم قرار في التحليل كان احتساب الغرامات من مستوى المخالفة لا مستوى الزيارة، فالخلط بينهما يعطي 109 مليون ريال بدل 833 مليون، وهو فارق يقلب كل استنتاج لاحق.
 
@@ -52,7 +52,7 @@ Power BI، وDAX، وPower Query، ونمذجة نجمية، وPython.
 
 An interactive Power BI dashboard that analyzes regulatory inspection visits for the Madinah Region Municipality across the first half of 2023, about 80,000 visits and 438,000 violations, turning them into a clear picture that supports enforcement and collection decisions.
 
-*The project data is synthetically generated for demonstration; the figures are illustrative.*
+*The project uses a sample dataset for demonstration; the figures are illustrative.*
 
 ![Overview page](dashboard-overview.png)
 
@@ -66,7 +66,7 @@ Together these point to three priorities: fix the invoicing pipeline first, then
 
 ## How it was built
 
-The source was an Excel workbook with two sheets at different grains (visit and violation), which was restructured into a star schema separating facts from dimensions: two fact tables (visits and violations) and six dimensions, namely date, establishment, activity, location, and inspector, with 23 DAX measures and six active relationships.
+The source was an Excel workbook with two sheets at different grains (visit and violation), which I restructured into a star schema separating facts from dimensions: two fact tables (visits and violations) and six dimensions, namely date, establishment, activity, location, and inspector, with 23 DAX measures and six active relationships.
 
 The key analytical decision was reading fines from the violation grain rather than the visit grain, since mixing the two returns SAR 109M instead of 833M, a gap that flips every downstream conclusion.
 
